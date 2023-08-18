@@ -1,4 +1,5 @@
 import os
+import argparse
 
 def check_for_empty_or_none(*args):
     for arg in args:
@@ -54,8 +55,19 @@ def move(source_file, target_file):
 
 
 if __name__ == '__main__':
-    source_file_path = "/Users/sainanduri/PycharmProjects/Intro/5Files/students.txt"
-    target_file_path = "/Users/sainanduri/PycharmProjects/Intro/5Files/students1.txt"
-    copy(source_file=source_file_path, target_file=target_file_path)
-    move(source_file=source_file_path, target_file=target_file_path)
-    print("Copy Successfully done")
+    # source_file_path = "/Users/sainanduri/PycharmProjects/Intro/5Files/students.txt"
+    # target_file_path = "/Users/sainanduri/PycharmProjects/Intro/5Files/students1.txt"
+    parser = argparse.ArgumentParser(
+        prog='Copy and Move file',
+        description='this program copies or moves files.',
+        epilog='file operations')
+    parser.add_argument('action',choices=['copy','move'])
+    parser.add_argument('--source_path',default='',help="SOURCE file path")
+    parser.add_argument('--target_path',default='',help="target file path")
+    args = parser.parse_args()
+    if args.action == "copy":
+        copy(source_file=args.source_path, target_file=args.target_path)
+    elif args.action == "move":
+        move(source_file=args.source_path, target_file=args.target_path)
+    else:
+        raise ValueError("invalid action chosen")
