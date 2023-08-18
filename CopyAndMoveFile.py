@@ -25,11 +25,9 @@ def copy(source_file, target_file):
     if not os.path.exists(source_file):
         raise Exception(f"{source_file} not found")
 
-    with open(source_file, "r") as sfp:
-        source_file_contents = sfp.read()
-
-    with open(target_file, 'w') as tfp:
-        tfp.write(source_file_contents)
+    with open(source_file, "rb") as sfp, open(target_file, 'wb') as tfp:
+        for line in sfp.readlines():
+            tfp.write(line)
 
 
 def move(source_file, target_file):
@@ -46,12 +44,11 @@ def move(source_file, target_file):
     check_for_empty_or_none(source_file,target_file)
     if not os.path.exists(source_file):
         raise Exception(f"{source_file} not found")
-    with open(source_file, "r") as sfp:
-        source_file_contents = sfp.read()
+    with open(source_file, "rb") as sfp, open(target_file, 'wb') as tfp:
+        for line in sfp.readlines():
+            tfp.write(line)
 
-    with open(target_file, 'w') as tfp:
-        tfp.write(source_file_contents)
-        os.remove(source_file)
+    os.remove(source_file)
 
 
 if __name__ == '__main__':
